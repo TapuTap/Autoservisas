@@ -85,21 +85,7 @@ class OrderEntry(models.Model):
         verbose_name_plural = _("order entries")
 
     def __str__(self):
-        return f"OrderEntry {self.service.title}, Quantity {self.quantity}"
+        return f"Order entry #{self.pk}: {self.service.title}"
 
     def get_absolute_url(self):
         return reverse("orderentry_detail", kwargs={"pk": self.pk})
-
-
-
-    
-
-
-
-
-
-
-
-
-
-    

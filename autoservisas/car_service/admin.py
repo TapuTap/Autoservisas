@@ -1,8 +1,14 @@
 from django.contrib import admin
 from . import models
+from.models import OrderEntry
+
+class OrderEntryInline(admin.TabularInline):
+    model = OrderEntry
+
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ("car", "date", "price")
+    inlines = [OrderEntryInline]
 
 
 class CarAdmin(admin.ModelAdmin):
@@ -20,4 +26,4 @@ admin.site.register(models.CarModel)
 admin.site.register(models.Order, OrderAdmin)
 admin.site.register(models.OrderEntry)
 admin.site.register(models.Service, ServiceAdmin)
-# OrderAdmin
+
