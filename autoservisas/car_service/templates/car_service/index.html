@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}{{ block.super }}{% endblock title %}
+{% block content %}
+<h1>Autoservice</h1>
+<p>Reliable care for your wheels!</p>
+<ul>
+    <li><strong>Services:</stron>{{services_count}}</li>
+    <li><strong>Completed orders:</stron>{{orders_completed}}</li>
+    <li><strong>Cars:</stron>{{cars_count}}</li>
+</ul>
+{% endblock content %}
+   

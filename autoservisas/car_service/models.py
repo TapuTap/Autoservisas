@@ -51,6 +51,14 @@ class Order(models.Model):
         verbose_name = _("order")
         verbose_name_plural = _("orders")
 
+    STATUS = (
+        (0, "Nepradėta"),
+        (1, "Vykdoma"),
+        (2, "Atlikta"),
+        (3, "Atšaukta"),
+    )
+    status = models.CharField(_("status"), max_length=1, choices= STATUS, blank=True, default=0, help_text="Statusas")
+    
     def __str__(self):
         return f"Order {self.id}"
 
