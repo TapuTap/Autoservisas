@@ -11,7 +11,7 @@ body {
   background-color:rgb(205, 216, 216);
 }
 header {
-  background-color: #9b918e;
+  background-color: #89a19e;
 }
 
 header ul.nav {
@@ -30,6 +30,8 @@ header ul.nav li {
 header ul.nav a {
   text-decoration: none;
   color:rgb(34, 34, 81);
+  background-color: #748a87;
+  padding: 0.1rem;
 }
 
 header ul.nav a:hover {
@@ -61,4 +63,24 @@ text-align: center;
 footer p {
   margin:0;
   font-size: 0.9rem;
+}
+
+ul.paginator {
+  list-style: none;
+  padding-inline-start: 0.5 rem;
+}
+
+.paginator {
+  display: flex;
+  flex-direction: row;
+  padding: 0.5rem;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.paginator a, .paginator .current {
+  text-decoration: none;
+  padding: 0 0.5rem;
+  border: 1px solid #89a19e;
+  background-color: #89a19e;
+  border-radius: 0.5rem;
 }

@@ -3,8 +3,6 @@ from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 
 
-# Create your models here.
-
 class CarModel(models.Model):
     brand = models.CharField(_("brand"), max_length=100, db_index=True)
     model = models.CharField(_("model"), max_length=100, db_index=True)
