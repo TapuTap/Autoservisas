@@ -1,7 +1,10 @@
 from django.shortcuts import render,  get_object_or_404
 from . models import Car, Order, Service
+from django.db.models.query import QuerySet
+from django.db.models import Q
 from django.views.generic import ListView
 from django.core.paginator import Paginator
+from typing import Any
 
 
 # Create your views here.
@@ -19,9 +22,19 @@ def index(request):
     return render(request, 'car_service/index.html', context)
 
 def car_list(request):
-    paginator = Paginator(Car.objects.all(), 5)
+    qs = Car.objects
+    query = request.GET.get("query")
+    if query:
+        qs = qs.filter(
+            Q(model__brand__istartswith=query) |
+            Q(model__model__istartswith=query)
+        )
+    else:
+        qs = qs.all()
+
+    paginator = Paginator(qs, 5)
     car_list = paginator.get_page(request.GET.get("page"))
-    return render(request, 'car_service/car_list.html', {'cars': car_list})
+    return render(request, 'car_service/car_list.html', {'car_list': car_list})
 
 def car_detail(request, pk: int):
     car = get_object_or_404(Car, pk=pk)
@@ -40,5 +53,15 @@ class OrderListView(ListView):
     paginate_by = 3
     template_name = 'car_service/order_list.html'
 
-    # def get_queryset(self):
-    #     return super().get_queryset().prefetch_related('order_entries').annotate(total_price=Sum('order_entries__price'))
+    def get_queryset(self) -> QuerySet[Any]:
+        qs = super().get_queryset()
+        query = self.request.GET.get('query')
+        if query:
+            qs = qs.filter(
+                Q(id__icontains=query) |
+                Q(car__license_plate__istartswith=query) 
+            )
+        return qs
+    
+
+ 
