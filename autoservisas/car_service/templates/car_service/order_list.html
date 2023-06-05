@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 {% block title %}Welcome to {{ block.super }}{% endblock title %}
 {% block content %}
-  <h1>Service Orders</h1>
-  <form action="{{request.path}}" method="get">
-      <input name="query" type="text" value="{{ request.GET.query }}">
-      <button type="submit">&#128269;</button>
-      {% if request.GET.query %}<a href="{{ request.path }}">clear</a>{% endif %}
-  </form>
-  {% include "includes/paginator_nav.html" %}
+    <h1>Service Orders</h1>
+    <form action="{{request.path}}" method="get">
+        <input name="query" type="text" value="{{ request.GET.query }}">
+        <button type="submit">&#128269;</button>
+        {% if request.GET.query %}<a href="{{ request.path }}">clear</a>{% endif %}
+    </form>
+    {% include "includes/paginator_nav.html" %}
 
-  <ul>
-    {% for order in orders %}
-      <li>
-        <strong><a href="{% url 'order_detail' order.pk %}">Order #{{ order.id }}:</a></strong> {{ order.car }}<br>
-      </li>
-    {% empty %}
-      <li>No orders found.</li>
-    {% endfor %}
+    <ul>
+        {% for order in orders %}
+            <li>
+                <strong><a href="{% url 'order_detail' order.pk %}">Order #{{ order.id }}:</a></strong> {{ order.car }}<br>
+            </li>
+        {% empty %}
+            <li>No orders found.</li>
+        {% endfor %}
   </ul>
   
 {% include "includes/paginator_pages.html" %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render,  get_object_or_404
-from . models import Car, Order, Service
+from . models import Car, Order, Service, OrderEntry
 from django.db.models.query import QuerySet
 from django.db.models import Q
 from django.views.generic import ListView
@@ -7,17 +7,22 @@ from django.core.paginator import Paginator
 from typing import Any
 
 
+
 # Create your views here.
 
 def index(request):
     services_count = Service.objects.all().count()
-    orders_completed = Order.objects.filter(status__exact=2).count()
+    orders_completed = OrderEntry.objects.filter(status__exact="complete").count()
     cars_count = Car.objects.all().count()
+    num_visits = request.session.get('num_visits', 1)
+    request.session['num_visits'] = num_visits + 1    
+
 
     context = {
         "services_count": services_count,
         "orders_completed": orders_completed,
-        "cars_count": cars_count
+        "cars_count": cars_count,
+        'num_visits': num_visits
     }
     return render(request, 'car_service/index.html', context)
 
@@ -32,7 +37,7 @@ def car_list(request):
     else:
         qs = qs.all()
 
-    paginator = Paginator(qs, 5)
+    paginator = Paginator(qs, 6)
     car_list = paginator.get_page(request.GET.get("page"))
     return render(request, 'car_service/car_list.html', {'car_list': car_list})
 

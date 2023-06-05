@@ -1,10 +1,19 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Welcome to {{ block.super }}{% endblock title %}
-
 {% block content %}
-  <h1>Car Detail</h1>
-  <p><strong>Owner:</strong> {{ car.client }}</p>
-  <p><strong>Model:</strong> {{ car.model }}</p>
-  <p><strong>License Plate:</strong> {{ car.license_plate }}</p>
-  <p><strong>VIN Code:</strong> {{ car.vin }}</p>
+    <h1>Car Detail</h1>
+
+    {% if car.pictures %}
+        <img class="car-pictures" src="{{ car.pictures.url }}">
+    {% else %}
+        <img class="car-pictures" src="{% static 'car_service/img/default_picture.jpg' %}">
+    {% endif %}
+
+    <p><strong>Owner:</strong> {{ car.client }}</p>
+    <p><strong>Model:</strong> {{ car.model }}</p>
+    <p><strong>Year:</strong> {{ car.model.year }}</p>
+    <p><strong>Engine:</strong> {{ car.model.engine }}</p>
+    <p><strong>License Plate:</strong> {{ car.license_plate }}</p>
+    <p><strong>VIN Code:</strong> {{ car.vin }}</p>
 {% endblock %}
